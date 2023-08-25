@@ -10,25 +10,21 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 
+import * as enums from '../../utils/enums/Contato'
+
 import * as S from './styles'
 import { Botao, Campo, MainContainer, Titulo } from '../../styles'
+
+import FiltroCard from '../../components/FiltroCard'
 
 import { RootReducer } from '../../store'
 import { alterarTermo } from '../../store/reducers/filtro'
 
-import FiltroCard from '../../components/FiltroCard'
-
-import * as enums from '../../utils/enums/Tarefa'
-import { Typography } from '@mui/material'
-import Tarefa from '../../components/Tarefa'
+import Contato from '../../components/Contato'
 
 const drawerWidth = 240
 
 interface Props2 {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window
 }
 
@@ -39,7 +35,7 @@ type Props = {
 const DrawerELista = ({ mostrarFiltros }: Props, props: Props2) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { itens } = useSelector((state: RootReducer) => state.tarefas)
+  const { itens } = useSelector((state: RootReducer) => state.contatos)
   const { termo, criterio, valor } = useSelector(
     (state: RootReducer) => state.filtro
   )
@@ -51,24 +47,22 @@ const DrawerELista = ({ mostrarFiltros }: Props, props: Props2) => {
     setMobileOpen(!mobileOpen)
   }
 
-  const filtraTarefas = () => {
-    let tarefasFiltradas = itens
+  const filtraContatos = () => {
+    let contatosFiltrados = itens
     if (termo !== undefined) {
-      tarefasFiltradas = tarefasFiltradas.filter(
-        (item) => item.titulo.toLowerCase().search(termo.toLowerCase()) >= 0
+      contatosFiltrados = contatosFiltrados.filter(
+        (item) =>
+          item.nomeCompleto.toLowerCase().search(termo.toLowerCase()) >= 0 ||
+          item.telefone.search(termo) >= 0
       )
 
-      if (criterio === 'prioridade') {
-        tarefasFiltradas = tarefasFiltradas.filter(
-          (item) => item.prioridade === valor
-        )
-      } else if (criterio === 'status') {
-        tarefasFiltradas = tarefasFiltradas.filter(
-          (item) => item.status === valor
+      if (criterio === 'classificacao') {
+        contatosFiltrados = contatosFiltrados.filter(
+          (item) => item.classificacao === valor
         )
       }
 
-      return tarefasFiltradas
+      return contatosFiltrados
     } else {
       return itens
     }
@@ -77,19 +71,19 @@ const DrawerELista = ({ mostrarFiltros }: Props, props: Props2) => {
   const exibeResultadoFiltragem = (quantidade: number) => {
     let mensagem = ''
     const complementação =
-      termo !== undefined && termo.length > 0 ? `e "${termo}"` : ''
+      termo !== undefined && termo.length > 0 ? `| buscando por: ${termo}` : ''
 
-    if (criterio === 'todas') {
-      mensagem = `${quantidade} tarefa(s) encontrada(s) como: todas ${complementação}`
+    if (criterio === 'todos') {
+      mensagem = `${quantidade} Contato(s) encontrado(s) ${complementação}`
     } else {
-      mensagem = `${quantidade} tarefa(s) encontrada(s) com o(a) ${criterio} : "${`${valor}`}" ${complementação}`
+      mensagem = `${quantidade} Contato(s) encontrado(s) a classificação: ${`${valor}`} ${complementação}`
     }
 
     return mensagem
   }
 
-  const tarefas = filtraTarefas()
-  const mensagem = exibeResultadoFiltragem(tarefas.length)
+  const contatos = filtraContatos()
+  const mensagem = exibeResultadoFiltragem(contatos.length)
 
   const drawer = (
     <S.Aside>
@@ -101,36 +95,28 @@ const DrawerELista = ({ mostrarFiltros }: Props, props: Props2) => {
               placeholder="Buscar"
               value={termo}
               onChange={(e) => {
-                dispatch(alterarTermo(e.target.value))
+                dispatch(
+                  alterarTermo(e.target.value.replace(/[^a-zA-Z0-9--- ]/g, ''))
+                )
               }}
             />
             <S.Filtros onClick={handleDrawerToggle}>
               <FiltroCard
-                valor={enums.Status.PENDENTE}
-                criterio="status"
-                legenda="pendente"
+                valor={enums.Classificacao.AMIGO}
+                criterio="classificacao"
+                legenda="Amigos"
               />
               <FiltroCard
-                valor={enums.Status.CONCLUIDA}
-                criterio="status"
-                legenda="concluídas"
+                valor={enums.Classificacao.FAMILIAR}
+                criterio="classificacao"
+                legenda="Familiares"
               />
               <FiltroCard
-                valor={enums.Prioridade.URGENTE}
-                criterio="prioridade"
-                legenda="urgentes"
+                valor={enums.Classificacao.OUTROS}
+                criterio="classificacao"
+                legenda="Outros"
               />
-              <FiltroCard
-                valor={enums.Prioridade.IMPORTANTE}
-                criterio="prioridade"
-                legenda="importantes"
-              />
-              <FiltroCard
-                valor={enums.Prioridade.NORMAL}
-                criterio="prioridade"
-                legenda="normal"
-              />
-              <FiltroCard criterio="todas" legenda="todas" />
+              <FiltroCard criterio="todos" legenda="Todos" />
             </S.Filtros>
           </>
         ) : (
@@ -174,14 +160,13 @@ const DrawerELista = ({ mostrarFiltros }: Props, props: Props2) => {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
@@ -217,14 +202,14 @@ const DrawerELista = ({ mostrarFiltros }: Props, props: Props2) => {
         <MainContainer>
           <Titulo as="p">{mensagem}</Titulo>
           <ul>
-            {tarefas.map((t) => (
-              <li key={t.titulo}>
-                <Tarefa
-                  id={t.id}
-                  descricao={t.descricao}
-                  titulo={t.titulo}
-                  status={t.status}
-                  prioridade={t.prioridade}
+            {contatos.map((c) => (
+              <li key={c.id}>
+                <Contato
+                  id={c.id}
+                  nomeCompleto={c.nomeCompleto}
+                  email={c.email}
+                  telefone={c.telefone}
+                  classificacao={c.classificacao}
                 />
               </li>
             ))}

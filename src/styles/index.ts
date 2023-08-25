@@ -32,6 +32,7 @@ export const Titulo = styled.h2`
 
 export const Campo = styled.input`
   padding: 8px;
+  margin-bottom: 16px;
   border-radius: 8px;
   background-color: #fff;
   border-radius: 8px;

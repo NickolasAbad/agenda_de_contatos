@@ -1,19 +1,19 @@
-import React from 'react'
 import * as S from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { alterarFiltro } from '../../store/reducers/filtro'
-import * as enums from '../../utils/enums/Tarefa'
 import { RootReducer } from '../../store'
+
+import * as enums from '../../utils/enums/Contato'
 
 export type Props = {
   legenda: string
-  criterio: 'prioridade' | 'status' | 'todas'
-  valor?: enums.Prioridade | enums.Status
+  criterio: 'classificacao' | 'todos'
+  valor?: enums.Classificacao
 }
 
 const FiltroCard = ({ legenda, criterio, valor }: Props) => {
   const dispatch = useDispatch()
-  const { filtro, tarefas } = useSelector((state: RootReducer) => state)
+  const { filtro, contatos } = useSelector((state: RootReducer) => state)
   const verificaEstaAtivo = () => {
     const mesmoCriterio = filtro.criterio === criterio
     const mesmoValor = filtro.valor === valor
@@ -21,13 +21,11 @@ const FiltroCard = ({ legenda, criterio, valor }: Props) => {
     return mesmoCriterio && mesmoValor
   }
 
-  const contarTarefas = () => {
-    if (criterio === 'todas') return tarefas.itens.length
-    if (criterio === 'prioridade') {
-      return tarefas.itens.filter((item) => item.prioridade === valor).length
-    }
-    if (criterio === 'status') {
-      return tarefas.itens.filter((item) => item.status === valor).length
+  const contarContatos = () => {
+    if (criterio === 'todos') return contatos.itens.length
+    if (criterio === 'classificacao') {
+      return contatos.itens.filter((item) => item.classificacao === valor)
+        .length
     }
   }
 
@@ -42,7 +40,7 @@ const FiltroCard = ({ legenda, criterio, valor }: Props) => {
 
   const ativo = verificaEstaAtivo()
 
-  const contador = contarTarefas()
+  const contador = contarContatos()
 
   return (
     <S.Card ativo={ativo} onClick={filtrar}>
