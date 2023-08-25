@@ -1,36 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import Contato from '../../models/Contato'
 
-import * as enums from '../../utils/enums/Contato'
+import { itens } from '../../utils/contatos/Lista'
 
 type ContatoState = {
   itens: Contato[]
 }
 
 const initialState: ContatoState = {
-  itens: [
-    {
-      id: 1,
-      nomeCompleto: 'Willian Bonner',
-      telefone: '(48) 99920-8923',
-      email: 'willianbonner123@gmail.com',
-      classificacao: enums.Classificacao.AMIGO
-    },
-    {
-      id: 2,
-      nomeCompleto: 'Steve Jobs',
-      telefone: '(48) 99663-8992',
-      email: 'apple@gmail.com',
-      classificacao: enums.Classificacao.FAMILIAR
-    },
-    {
-      id: 3,
-      nomeCompleto: 'Gian Souza',
-      telefone: '(11) 99423-2751',
-      email: 'giansouza@icloud.com',
-      classificacao: enums.Classificacao.OUTROS
-    }
-  ]
+  itens
 }
 
 const contatosSlice = createSlice({
