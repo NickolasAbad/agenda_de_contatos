@@ -1,46 +1,49 @@
-# Getting Started with Create React App
+# Agenda de Contatos 📖
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bem-vindo ao projeto de Agenda de Contatos, uma aplicação criada com base no projeto anterior de Lista de Tarefas. Ela está mais focada no gerenciamento de contatos, com recursos exclusivos para ajudar a manter todas as suas conexões ao alcance dos dedos. 🤓
 
-## Available Scripts
+## DEMO
+- [Acesse a Agenda de Contatos](https://agenda-de-contatos-ten-delta.vercel.app/)
 
-In the project directory, you can run:
+## Funcionalidades 🚀
 
-### `npm start`
+1. **Gerenciamento Completo de Contatos:** Adicione, edite ou remova contatos facilmente.
+2. **Máscaras para Telefones Brasileiros:** A entrada de números de telefone é suavizada com máscaras que se encaixam no padrão brasileiro.
+3. **Validação de Informações:** Os campos de e-mail, telefone e edição passam por verificações rigorosas para garantir a consistência e validade dos dados, incluindo a validação do telefone para que se encaixe em um formato válido brasileiro.
+4. **Classificação de Contatos:** Organize seus contatos em três tags distintas: Amigos, Familiares e Outros.
+5. **Busca e Filtragem:** Encontre rapidamente os contatos procurando por nome ou telefone, ou filtrando pela classificação.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tecnologias Utilizadas 💻
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- React
+- Redux
+- TypeScript
+- Styled-components
+- MaterialUI
 
-### `npm test`
+## Detalhes 🔍
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Informações do Contato
 
-### `npm run build`
+- **Nome Completo:** Substitui o título da versão anterior da Lista de Tarefas.
+- **Email & Telefone:** Exibe duas informações distintas, o e-mail e o número de telefone.
+- **Tags:** Categorize seus contatos em Amigos, Familiares ou Outros.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Adicionar Novo Contato
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Campos:** Inserir nome completo, telefone, e-mail e classificação.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Como Começar 🏁
 
-### `npm run eject`
+1. Clone o repositório.
+2. Instale as dependências usando `npm install`.
+3. Inicie o servidor de desenvolvimento usando `npm start`.
+4. Abra [http://localhost:3000](http://localhost:3000) para visualizá-lo no navegador.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Contribuição 🤝
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Sinta-se à vontade para enviar um pull request! Vamos juntos fazer desta Agenda de Contatos algo ainda mais incrível!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Feito com 💙 por Nickolas Abad. Aproveite e conecte-se com seus amigos e familiares!
